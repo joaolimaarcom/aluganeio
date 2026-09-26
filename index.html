@@ -29,8 +29,9 @@
   </a>
   <nav class="nav" aria-label="Seções">
     <a href="#frota">Frota</a>
-    <a href="#ocasioes">Ocasiões</a>
+    <a href="#pacotes">Pacotes</a>
     <a href="#como-funciona">Como funciona</a>
+    <a href="#duvidas">Dúvidas</a>
   </nav>
   <a class="btn btn-small" href="#reserva">Reservar</a>
 </header>
@@ -150,6 +151,71 @@
     </div>
   </section>
 
+  <!-- PACOTES
+       REVISAR: duração, itens inclusos e preços são provisórios. -->
+  <section class="section" id="pacotes">
+    <div class="section-head">
+      <p class="eyebrow">Pacotes</p>
+      <h2>Escolha o formato do seu dia.</h2>
+      <p class="section-lede">Todos os pacotes valem para a Veraneio, a Boca de Sapo ou os dois carros juntos.</p>
+    </div>
+    <div class="packages">
+      <article class="pkg">
+        <header class="pkg-head">
+          <span class="pkg-time">até 2 h</span>
+          <h3>Chegada da Noiva</h3>
+          <p>O momento que todo mundo filma: a noiva descendo de um clássico na porta da cerimônia.</p>
+        </header>
+        <ul class="pkg-list">
+          <li>Busca da noiva em casa, hotel ou salão</li>
+          <li>Trajeto até a cerimônia</li>
+          <li>Tempo para fotos na chegada</li>
+          <li>Laço na cor do casamento</li>
+        </ul>
+        <div class="pkg-foot">
+          <p class="pkg-price"><small>Valor</small>sob consulta</p>
+          <a class="btn btn-block" href="#reserva" data-package="Chegada da Noiva" data-hours="2" data-occ="Casamento">Quero este pacote</a>
+        </div>
+      </article>
+
+      <article class="pkg pkg-featured">
+        <header class="pkg-head">
+          <span class="pkg-time">até 6 h</span>
+          <h3>Dia do Casamento</h3>
+          <p>O carro acompanha o casamento da chegada à saída dos noivos.</p>
+        </header>
+        <ul class="pkg-list">
+          <li>Tudo do pacote Chegada da Noiva</li>
+          <li>Sessão de fotos dos noivos com o carro</li>
+          <li>Carro exposto na festa para fotos dos convidados</li>
+          <li>Saída dos noivos</li>
+        </ul>
+        <div class="pkg-foot">
+          <p class="pkg-price"><small>Valor</small>sob consulta</p>
+          <a class="btn btn-block btn-plate" href="#reserva" data-package="Dia do Casamento" data-hours="6" data-occ="Casamento">Quero este pacote</a>
+        </div>
+      </article>
+
+      <article class="pkg">
+        <header class="pkg-head">
+          <span class="pkg-time">até 3 h</span>
+          <h3>Ensaio e Produção</h3>
+          <p>O carro vira cenário para pré-wedding, 15 anos, moda, clipe ou publicidade.</p>
+        </header>
+        <ul class="pkg-list">
+          <li>Carro no local do ensaio ou da gravação</li>
+          <li>Tempo livre para fotos e vídeos</li>
+          <li>Troca de cenário no mesmo dia</li>
+          <li>Diárias para filmagens mais longas</li>
+        </ul>
+        <div class="pkg-foot">
+          <p class="pkg-price"><small>Valor</small>sob consulta</p>
+          <a class="btn btn-block" href="#reserva" data-package="Ensaio e Produção" data-hours="3" data-occ="Ensaio fotográfico">Quero este pacote</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- COMO FUNCIONA -->
   <section class="section" id="como-funciona">
     <div class="section-head">
@@ -189,9 +255,10 @@
         <p>Preencha os campos e toque em enviar. Abrimos o WhatsApp com sua mensagem pronta, é só confirmar o envio.</p>
         <div class="ticket" aria-live="polite">
           <div class="ticket-row"><span>Carro</span><strong id="tkCar">Veraneio</strong></div>
+          <div class="ticket-row"><span>Pacote</span><strong id="tkPkg">Dia do Casamento</strong></div>
           <div class="ticket-row"><span>Data</span><strong id="tkDate">a escolher</strong></div>
           <div class="ticket-row"><span>Ocasião</span><strong id="tkOcc">Casamento</strong></div>
-          <div class="ticket-row"><span>Duração</span><strong id="tkHours">4 horas</strong></div>
+          <div class="ticket-row"><span>Duração</span><strong id="tkHours">6 horas</strong></div>
         </div>
       </div>
 
@@ -206,7 +273,21 @@
             <input type="radio" name="car" id="carBoca" value="Boca de Sapo">
             <span><strong>Boca de Sapo</strong><small>Chevrolet 3100</small></span>
           </label>
+          <label class="pick-opt pick-both">
+            <input type="radio" name="car" id="carBoth" value="Os dois carros">
+            <span><strong>Os dois</strong><small>Veraneio + Boca de Sapo</small></span>
+          </label>
         </fieldset>
+
+        <label class="field">
+          <span>Pacote</span>
+          <select id="fPkg" name="package">
+            <option>Chegada da Noiva</option>
+            <option selected>Dia do Casamento</option>
+            <option>Ensaio e Produção</option>
+            <option>Quero montar o meu</option>
+          </select>
+        </label>
 
         <div class="row">
           <label class="field">
@@ -227,8 +308,8 @@
         </div>
 
         <label class="field">
-          <span>Duração: <output id="fHoursOut">4 horas</output></span>
-          <input type="range" id="fHours" name="hours" min="1" max="12" value="4">
+          <span>Duração: <output id="fHoursOut">6 horas</output></span>
+          <input type="range" id="fHours" name="hours" min="1" max="12" value="6">
         </label>
 
         <div class="row">
@@ -238,7 +319,7 @@
           </label>
           <label class="field">
             <span>Cidade do evento</span>
-            <input type="text" id="fCity" name="city" autocomplete="address-level2" placeholder="São Paulo">
+            <input type="text" id="fCity" name="city" autocomplete="address-level2" placeholder="Uberlândia">
           </label>
         </div>
 
@@ -250,6 +331,53 @@
         <p class="form-error" id="formError" hidden></p>
         <button class="btn btn-block btn-big" type="submit">Enviar pelo WhatsApp</button>
       </form>
+    </div>
+  </section>
+
+  <!-- DÚVIDAS
+       REVISAR: respostas provisórias. O chat usa as mesmas informações
+       (worker/src/conhecimento.js), então mantenha os dois iguais. -->
+  <section class="section" id="duvidas">
+    <div class="faq-grid">
+      <div class="section-head">
+        <p class="eyebrow">Dúvidas</p>
+        <h2>Perguntas que todo mundo faz.</h2>
+        <p class="section-lede">Não achou a sua? Pergunte no chat ou chame no WhatsApp.</p>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>O carro vem com motorista?</summary>
+          <p>Sim. O carro vai sempre com o nosso motorista, que conhece o carro e cuida dele durante o evento. Assim você só se preocupa com o seu dia.</p>
+        </details>
+        <details>
+          <summary>Posso decorar o carro?</summary>
+          <p>Pode. O laço na cor do casamento já está incluso. Flores, placas e outros enfeites podem ser combinados, desde que não risquem nem colem na pintura.</p>
+        </details>
+        <details>
+          <summary>Quais cidades vocês atendem?</summary>
+          <p>Uberlândia e região do Triângulo Mineiro. Para outras cidades, fale com a gente: calculamos o deslocamento e passamos o valor.</p>
+        </details>
+        <details>
+          <summary>Com quanto tempo de antecedência devo reservar?</summary>
+          <p>Quanto antes, melhor, porque cada carro atende um evento por vez. Para casamentos, o ideal é reservar com alguns meses de antecedência, principalmente para sábados.</p>
+        </details>
+        <details>
+          <summary>Como faço para garantir a data?</summary>
+          <p>Depois de combinar os detalhes pelo WhatsApp, a data fica reservada com um sinal. O restante é pago até o dia do evento.</p>
+        </details>
+        <details>
+          <summary>E se chover?</summary>
+          <p>Os carros rodam normalmente com chuva. Se preferir, combinamos um plano B para as fotos em local coberto.</p>
+        </details>
+        <details>
+          <summary>Dá para usar os dois carros no mesmo evento?</summary>
+          <p>Dá, e fica lindo nas fotos. Um exemplo: a Veraneio leva a noiva e a Boca de Sapo fica exposta na festa. Escolha "Os dois" na reserva.</p>
+        </details>
+        <details>
+          <summary>Quantas pessoas cabem em cada carro?</summary>
+          <p>A Boca de Sapo é uma picape de cabine simples, ideal para o casal. A Veraneio é espaçosa e leva mais gente. Confirmamos a lotação exata na reserva.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -272,6 +400,41 @@
   </div>
 </footer>
 
+<!-- Botões flutuantes: chat + WhatsApp -->
+<div class="dock" id="dock">
+  <a class="dock-wa" id="dockWa" href="https://wa.me/5534997729702" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3Z"/></svg>
+  </a>
+  <button class="dock-chat" id="chatToggle" type="button" aria-expanded="false" aria-controls="chatPanel">
+    <span class="dock-dot" aria-hidden="true"></span>
+    Tire suas dúvidas
+  </button>
+</div>
+
+<section class="chat" id="chatPanel" aria-label="Chat da Aluganeio" hidden>
+  <header class="chat-head">
+    <div class="chat-id">
+      <span class="brand-plate" aria-hidden="true">AL</span>
+      <div>
+        <strong>Assistente Aluganeio</strong>
+        <small id="chatStatus">Responde na hora</small>
+      </div>
+    </div>
+    <button class="chat-close" id="chatClose" type="button" aria-label="Fechar chat">&times;</button>
+  </header>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <form class="chat-form" id="chatForm">
+    <label class="sr-only" for="chatInput">Sua pergunta</label>
+    <input id="chatInput" type="text" autocomplete="off" maxlength="500" placeholder="Pergunte sobre carros, pacotes, datas...">
+    <button type="submit" aria-label="Enviar pergunta">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 21 3l-8.5 18-2.2-7.3L3 11.5Z"/></svg>
+    </button>
+  </form>
+  <a class="chat-wa" id="chatWa" href="https://wa.me/5534997729702" target="_blank" rel="noopener">Prefere falar com uma pessoa? Chame no WhatsApp</a>
+</section>
+
 <script src="assets/app.js"></script>
+<script src="assets/chat.js"></script>
 </body>
 </html>

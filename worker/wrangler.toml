@@ -1,0 +1,12 @@
+name = "aluganeio-chat"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Sites que podem usar o chat (separados por vírgula)
+ALLOWED_ORIGINS = "https://joaolimaarcom.github.io,http://localhost:8000,http://127.0.0.1:8000"
+# Modelo do Gemini (lista em https://ai.google.dev/gemini-api/docs/models)
+GEMINI_MODEL = "gemini-3.5-flash-lite"
+
+# A chave NÃO fica aqui. Cadastre com:
+#   npx wrangler secret put GEMINI_API_KEY
