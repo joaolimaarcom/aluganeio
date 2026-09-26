@@ -3,27 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Aluganeio</title>
-<meta name="description" content="Aluguel de carros clássicos: Chevrolet Veraneio e Chevrolet 3100 Boca de Sapo para casamentos, ensaios fotográficos, filmes e eventos.">
-<meta property="og:title" content="Aluganeio — clássicos para alugar">
-<meta property="og:description" content="Veraneio e Boca de Sapo para casamentos, ensaios, filmes e eventos.">
+<title>Aluganeio · Aluguel de carros antigos para casamento em Uberlândia</title>
+<meta name="description" content="Alugue uma Chevrolet Veraneio ou uma Chevrolet 3100 Boca de Sapo para casamentos, ensaios fotográficos, filmes e eventos em Uberlândia e região. Reserva rápida pelo WhatsApp.">
+<link rel="canonical" href="https://joaolimaarcom.github.io/aluganeio/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Aluganeio">
+<meta property="og:url" content="https://joaolimaarcom.github.io/aluganeio/">
+<meta property="og:title" content="Aluganeio · Veraneio e Boca de Sapo para alugar">
+<meta property="og:description" content="Dois clássicos Chevrolet amarelos para casamentos, ensaios, filmes e eventos em Uberlândia e região.">
+<meta property="og:image" content="https://joaolimaarcom.github.io/aluganeio/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Chevrolet Veraneio e Chevrolet 3100 Boca de Sapo amarelas lado a lado">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#15211F">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Barlow+Condensed:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,700..900&family=Barlow+Condensed:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Aluganeio",
+  "description": "Aluguel de carros antigos para casamentos, ensaios fotográficos, filmes e eventos.",
+  "url": "https://joaolimaarcom.github.io/aluganeio/",
+  "image": "https://joaolimaarcom.github.io/aluganeio/assets/og-image.jpg",
+  "telephone": "+55 34 99772-9702",
+  "areaServed": ["Uberlândia", "Triângulo Mineiro"],
+  "address": { "@type": "PostalAddress", "addressLocality": "Uberlândia", "addressRegion": "MG", "addressCountry": "BR" }
+}
+</script>
 </head>
 <body>
 
 <div class="backdrop" aria-hidden="true">
-  <img class="bd-sharp" src="assets/fotos/os-dois.jpg" alt="">
-  <img class="bd-blur" src="assets/fotos/os-dois.jpg" alt="">
+  <picture>
+    <source type="image/webp" srcset="assets/fotos/os-dois-800.webp 800w, assets/fotos/os-dois-1500.webp 1500w" sizes="100vw">
+    <img class="bd-sharp" src="assets/fotos/os-dois.jpg" alt="" fetchpriority="high" decoding="async">
+  </picture>
+  <img class="bd-blur" src="assets/fotos/os-dois-blur.webp" alt="" decoding="async">
   <div class="bd-shade"></div>
   <div class="bd-veil"></div>
 </div>
 
 <header class="topbar">
-  <a class="brand" href="#inicio" aria-label="Aluganeio, início">
+  <a class="brand" href="#inicio">
     <span class="brand-plate" aria-hidden="true">AL</span>
     <span class="brand-name">Aluganeio</span>
   </a>
@@ -43,7 +71,7 @@
     <div class="hero-copy">
       <p class="eyebrow">Aluguel de clássicos · Chevrolet Veraneio e Chevrolet 3100 Boca de Sapo</p>
       <h1 class="hero-title">Chegue de <span class="swap" id="heroSwap">Veraneio</span></h1>
-      <p class="hero-lede">Dois Chevrolet amarelos, cromados e prontos para o seu casamento, ensaio, filme ou evento. Você escolhe o carro e a data, a gente cuida do resto.</p>
+      <p class="hero-lede">Dois clássicos Chevrolet amarelos, cromados e prontos para o seu casamento, ensaio, filme ou evento. Você escolhe o carro e a data, a gente cuida do resto.</p>
       <div class="hero-actions">
         <a class="btn btn-plate" href="#reserva">Montar minha reserva</a>
         <a class="btn btn-glass" href="#frota">Conhecer a frota</a>
@@ -77,7 +105,10 @@
     <div class="fleet">
       <article class="car-card" data-car="veraneio">
         <div class="photo">
-          <img src="assets/fotos/veraneio.jpg" alt="Chevrolet Veraneio amarela, vista de frente, com grade preta e para-choque cromado" style="--pos: 40% 60%" loading="lazy" onerror="this.remove()">
+          <picture>
+            <source type="image/webp" srcset="assets/fotos/veraneio-560.webp 560w, assets/fotos/veraneio-900.webp 900w" sizes="(min-width: 900px) 540px, 92vw">
+            <img src="assets/fotos/veraneio.jpg" alt="Chevrolet Veraneio amarela, vista de frente, com grade preta e para-choque cromado" style="--pos: 40% 60%" width="800" height="916" loading="lazy" decoding="async" onerror="this.remove()">
+          </picture>
           <div class="photo-empty">
             <div class="plate"><small>ALUGANEIO · BR</small><strong>VE·0001</strong></div>
             <span>Foto em breve</span>
@@ -86,9 +117,9 @@
         <div class="car-body">
           <div class="car-title">
             <h3>Chevrolet Veraneio</h3>
-            <span class="tag">O utilitário mais famoso do Brasil</span>
+            <span class="tag">Um ícone das estradas brasileiras</span>
           </div>
-          <p>Espaçosa, imponente e amarela do para-choque ao teto. A Veraneio marcou gerações nas estradas brasileiras e hoje faz qualquer chegada virar foto.</p>
+          <p>Espaçosa, imponente e amarela do capô ao teto. A Veraneio marcou gerações nas estradas brasileiras e hoje faz qualquer chegada virar foto.</p>
           <dl class="specs">
             <div><dt>Ano</dt><dd class="todo">a definir</dd></div>
             <div><dt>Cor</dt><dd>Amarela</dd></div>
@@ -101,7 +132,10 @@
 
       <article class="car-card" data-car="boca">
         <div class="photo">
-          <img src="assets/fotos/boca-de-sapo.jpg" alt="Picape Chevrolet 3100 Boca de Sapo amarela com pintura envelhecida, montada em um jardim para evento" style="--pos: 50% 65%" loading="lazy" onerror="this.remove()">
+          <picture>
+            <source type="image/webp" srcset="assets/fotos/boca-de-sapo-560.webp 560w, assets/fotos/boca-de-sapo-900.webp 900w" sizes="(min-width: 900px) 540px, 92vw">
+            <img src="assets/fotos/boca-de-sapo.jpg" alt="Picape Chevrolet 3100 Boca de Sapo amarela com pintura envelhecida, montada em um jardim para evento" style="--pos: 50% 65%" width="800" height="1067" loading="lazy" decoding="async" onerror="this.remove()">
+          </picture>
           <div class="photo-empty">
             <div class="plate"><small>ALUGANEIO · BR</small><strong>BS·0002</strong></div>
             <span>Foto em breve</span>
@@ -112,7 +146,7 @@
             <h3>Chevrolet 3100 Boca de Sapo</h3>
             <span class="tag">A picape da grade cromada</span>
           </div>
-          <p>A grade cromada de cinco frisos deu o apelido que pegou. Pintura amarela com pátina, rodas modernas e aquele charme de quem já rodou muita estrada. Fica linda na decoração de festas e casamentos no campo.</p>
+          <p>A grade cromada deu o apelido que pegou. Pintura amarela com pátina, rodas modernas e aquele charme de quem já rodou muita estrada. Fica linda na decoração de festas e casamentos no campo.</p>
           <dl class="specs">
             <div><dt>Ano</dt><dd class="todo">a definir</dd></div>
             <div><dt>Cor</dt><dd>Amarela com pátina</dd></div>
@@ -126,7 +160,7 @@
   </section>
 
   <!-- OCASIÕES -->
-  <section class="section section-alt" id="ocasioes">
+  <section class="section" id="ocasioes">
     <div class="section-head">
       <p class="eyebrow">Ocasiões</p>
       <h2>Para os dias que merecem entrada de cinema.</h2>
@@ -252,7 +286,7 @@
       <div class="reserve-copy">
         <p class="eyebrow">Reserva</p>
         <h2>Monte seu pedido em um minuto.</h2>
-        <p>Preencha os campos e toque em enviar. Abrimos o WhatsApp com sua mensagem pronta, é só confirmar o envio.</p>
+        <p>Preencha os campos e toque em enviar. Abrimos o WhatsApp com a sua mensagem pronta. É só confirmar o envio.</p>
         <div class="ticket" aria-live="polite">
           <div class="ticket-row"><span>Carro</span><strong id="tkCar">Veraneio</strong></div>
           <div class="ticket-row"><span>Pacote</span><strong id="tkPkg">Dia do Casamento</strong></div>
@@ -325,7 +359,7 @@
 
         <label class="field">
           <span>Algum detalhe? <em>(opcional)</em></span>
-          <textarea id="fNotes" name="notes" rows="3" placeholder="Horário, locais, decoração..."></textarea>
+          <textarea id="fNotes" name="notes" rows="3" placeholder="Horário, locais, decoração…"></textarea>
         </label>
 
         <p class="form-error" id="formError" hidden></p>
@@ -371,7 +405,7 @@
         </details>
         <details>
           <summary>Dá para usar os dois carros no mesmo evento?</summary>
-          <p>Dá, e fica lindo nas fotos. Um exemplo: a Veraneio leva a noiva e a Boca de Sapo fica exposta na festa. Escolha "Os dois" na reserva.</p>
+          <p>Dá, e fica lindo nas fotos. Um exemplo: a Veraneio leva a noiva e a Boca de Sapo fica exposta na festa. Escolha “Os dois” na reserva.</p>
         </details>
         <details>
           <summary>Quantas pessoas cabem em cada carro?</summary>
@@ -426,7 +460,7 @@
   <div class="chat-chips" id="chatChips"></div>
   <form class="chat-form" id="chatForm">
     <label class="sr-only" for="chatInput">Sua pergunta</label>
-    <input id="chatInput" type="text" autocomplete="off" maxlength="500" placeholder="Pergunte sobre carros, pacotes, datas...">
+    <input id="chatInput" type="text" autocomplete="off" maxlength="500" placeholder="Pergunte sobre carros, pacotes, datas…">
     <button type="submit" aria-label="Enviar pergunta">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 21 3l-8.5 18-2.2-7.3L3 11.5Z"/></svg>
     </button>

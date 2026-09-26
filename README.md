@@ -25,7 +25,7 @@ worker/worker.js           servidor do chat (arquivo único para colar na Cloudf
 - [ ] Confirmar pacotes (duração, itens inclusos, preços ou "sob consulta")
 - [ ] Confirmar respostas das Dúvidas (motorista, decoração, cidades, sinal, chuva)
 - [x] Worker do chat publicado: https://aluganeio.jlrodrigues6900.workers.dev/
-- [ ] Cadastrar o secret GEMINI_API_KEY no Worker
+- [x] Chave do Gemini cadastrada no Worker (chat funcionando)
 - [ ] Álbuns de fotos para a galeria
 
 ## Chat com Gemini (tudo pelo navegador, sem instalar nada)

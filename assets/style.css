@@ -110,15 +110,17 @@ p { margin: 0; }
   object-fit: cover; object-position: 50% 62%;
 }
 .bd-sharp { animation: focus-in 2s cubic-bezier(.2,.7,.2,1) both; }
-.bd-blur { filter: blur(40px) saturate(160%); transform: scale(1.08); opacity: var(--blur-o); }
+/* a versão desfocada já vem pronta do arquivo (mais leve que blur no CSS) */
+.bd-blur { filter: saturate(150%); transform: scale(1.06); opacity: var(--blur-o); will-change: opacity; }
 .bd-shade {
   position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, rgba(8, 12, 11, 0.72) 0%, rgba(8, 12, 11, 0.35) 55%, rgba(8, 12, 11, 0.10) 100%),
+    linear-gradient(90deg, rgba(8, 12, 11, 0.80) 0%, rgba(8, 12, 11, 0.45) 55%, rgba(8, 12, 11, 0.12) 100%),
     linear-gradient(180deg, rgba(8, 12, 11, 0.35) 0%, transparent 30%, rgba(8, 12, 11, 0.55) 100%);
   opacity: calc(1 - var(--blur-o) * 0.6);
+  will-change: opacity;
 }
-.bd-veil { position: absolute; inset: 0; background: var(--veil); opacity: var(--blur-o); }
+.bd-veil { position: absolute; inset: 0; background: var(--veil); opacity: var(--blur-o); will-change: opacity; }
 @keyframes focus-in {
   from { filter: blur(24px) saturate(140%); transform: scale(1.1); }
   to { filter: none; transform: scale(1); }
@@ -215,7 +217,7 @@ p { margin: 0; }
   color: var(--on-photo);
 }
 .hero-copy { display: grid; gap: 22px; max-width: 900px; }
-.hero .eyebrow { color: rgba(246, 247, 242, 0.82); }
+.hero .eyebrow { color: rgba(246, 247, 242, 0.94); }
 .hero-title {
   font-size: clamp(52px, 10.5vw, 148px);
   font-weight: 900;
@@ -227,7 +229,7 @@ p { margin: 0; }
 }
 .swap { color: var(--plate); display: inline-block; transition: opacity .35s ease, transform .35s ease, filter .35s ease; }
 .swap.out { opacity: 0; transform: translateY(12px); filter: blur(8px); }
-.hero-lede { font-size: clamp(18px, 1.8vw, 21px); color: rgba(246, 247, 242, 0.88); max-width: 54ch; }
+.hero-lede { font-size: clamp(18px, 1.8vw, 21px); color: rgba(246, 247, 242, 0.96); max-width: 54ch; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-meta { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; }
 .hero-plates { display: flex; gap: 12px; }
@@ -247,7 +249,8 @@ p { margin: 0; }
 }
 @media (max-width: 600px) { .hero-plates .plate strong { font-size: 26px; } }
 
-@keyframes rise { from { opacity: 0; transform: translateY(24px); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
+/* sem opacity 0: o título aparece já no primeiro quadro (melhor para o Google) */
+@keyframes rise { from { transform: translateY(24px); filter: blur(10px); } to { transform: none; filter: none; } }
 @keyframes cue { 0%, 100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(10px); opacity: 0; } }
 
 /* ---------- Faixa ---------- */
@@ -343,12 +346,12 @@ p { margin: 0; }
 
 /* ---------- Reserva ---------- */
 .reserve {
-  background: rgba(12, 18, 16, 0.62);
+  background: rgba(12, 18, 16, 0.74);
   border-color: rgba(255, 255, 255, 0.12);
   color: var(--on-photo);
 }
 .reserve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: clamp(32px, 6vw, 72px); align-items: start; }
-.reserve .eyebrow, .reserve-copy > p { color: rgba(246, 247, 242, 0.75); }
+.reserve .eyebrow, .reserve-copy > p { color: rgba(246, 247, 242, 0.88); }
 .reserve-copy { display: grid; gap: 18px; }
 .ticket {
   margin-top: 12px;
@@ -358,7 +361,7 @@ p { margin: 0; }
 }
 .ticket-row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.10); }
 .ticket-row:last-child { border-bottom: 0; }
-.ticket-row span { font: 600 13px/1.4 var(--f-data); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246, 247, 242, 0.62); }
+.ticket-row span { font: 600 13px/1.4 var(--f-data); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246, 247, 242, 0.82); }
 .ticket-row strong { font-weight: 600; text-align: right; }
 
 .form {

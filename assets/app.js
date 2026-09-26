@@ -39,8 +39,9 @@ const formatDate = (iso) => {
   return `${d}/${m}/${y}`;
 };
 
-// Data mínima: hoje
-date.min = new Date().toISOString().slice(0, 10);
+// Data mínima: hoje (no fuso de quem está usando, não em UTC)
+const today = new Date();
+date.min = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
 function updateTicket() {
   $("#tkCar").textContent = form.car.value;
