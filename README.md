@@ -16,9 +16,10 @@ assets/fotos/       fotos dos carros
 ## Pendências para completar
 
 - [ ] Número do WhatsApp em `assets/app.js` (`WHATSAPP` e `WHATSAPP_LABEL`)
-- [ ] Fotos: `assets/fotos/veraneio.jpg` e `assets/fotos/boca-de-sapo.jpg` (4:3, mín. 1600px de largura)
-- [ ] Ano, cor e lugares de cada carro (campos "a definir" no `index.html`)
-- [ ] Confirmar o modelo do Boca de Sapo, cidade de atuação e se o aluguel inclui motorista
+- [x] Fotos da Veraneio e da Boca de Sapo (trocar por fotos em alta resolução quando tiver)
+- [ ] ano e lugares de cada carro (campos "a definir" no `index.html`)
+- [x] Boca de Sapo = Chevrolet 3100
+- [ ] Confirmar cidade de atuação e se o aluguel inclui motorista
 
 ## Publicar no GitHub Pages
 
