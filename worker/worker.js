@@ -102,12 +102,12 @@ function cleanMessages(raw) {
   return msgs;
 }
 
-async function askGemini(messages, env) {
+async function askGemini(messages, env, apiKey) {
   const model = env.GEMINI_MODEL || DEFAULT_MODEL;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
   const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+    headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
       contents: messages.map((m) => ({
@@ -124,15 +124,28 @@ async function askGemini(messages, env) {
   return text;
 }
 
+// Acha a chave mesmo se o nome no painel tiver espaço ou letras minúsculas
+function findApiKey(env) {
+  if (typeof env.GEMINI_API_KEY === "string" && env.GEMINI_API_KEY.trim()) return env.GEMINI_API_KEY.trim();
+  const name = Object.keys(env).find((k) => k.trim().toUpperCase().replace(/[\s-]+/g, "_") === "GEMINI_API_KEY");
+  const value = name && env[name];
+  return typeof value === "string" && value.trim() ? value.trim() : "";
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
     const cors = corsHeaders(origin, env);
+    const apiKey = findApiKey(env);
 
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors.headers });
+    // Diagnóstico: abrir a URL no navegador mostra só os NOMES das variáveis, nunca os valores
+    if (request.method === "GET") {
+      return json({ chat: "Aluganeio", chaveConfigurada: Boolean(apiKey), variaveis: Object.keys(env) }, 200, cors.headers);
+    }
     if (request.method !== "POST") return json({ error: "Use POST" }, 405, cors.headers);
     if (!cors.ok) return json({ error: "Origem não permitida" }, 403, cors.headers);
-    if (!env.GEMINI_API_KEY) return json({ error: "GEMINI_API_KEY não configurada" }, 500, cors.headers);
+    if (!apiKey) return json({ error: "GEMINI_API_KEY não configurada" }, 500, cors.headers);
 
     const ip = request.headers.get("CF-Connecting-IP") || "local";
     if (rateLimited(ip)) return json({ error: "Muitas mensagens, tente em alguns minutos" }, 429, cors.headers);
@@ -143,7 +156,7 @@ export default {
     if (!messages) return json({ error: "Mensagens inválidas" }, 400, cors.headers);
 
     try {
-      const reply = await askGemini(messages, env);
+      const reply = await askGemini(messages, env, apiKey);
       return json({ reply }, 200, cors.headers);
     } catch (e) {
       console.error(e);
