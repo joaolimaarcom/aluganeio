@@ -12,8 +12,9 @@ assets/style.css           identidade visual
 assets/app.js              reserva via WhatsApp, botões flutuantes, efeito de desfoque (número do WhatsApp aqui)
 assets/chat.js             chat flutuante (URL do Worker aqui, em CHAT_ENDPOINT)
 assets/fotos/              fotos dos carros
-worker/                    servidor do chat (guarda a chave do Gemini)
-worker/src/conhecimento.js tudo o que o assistente sabe (manter igual a Pacotes e Dúvidas do site)
+worker/worker.js           servidor do chat (arquivo único para colar na Cloudflare)
+                           o bloco CONHECIMENTO é tudo o que o assistente sabe:
+                           manter igual a Pacotes e Dúvidas do site
 ```
 
 ## Pendências
@@ -26,23 +27,27 @@ worker/src/conhecimento.js tudo o que o assistente sabe (manter igual a Pacotes 
 - [ ] Publicar o Worker do chat e colar a URL em `assets/chat.js`
 - [ ] Álbuns de fotos para a galeria
 
-## Chat com Gemini
+## Chat com Gemini (tudo pelo navegador, sem instalar nada)
 
 Sem o Worker publicado, o chat já funciona respondendo com as Dúvidas do próprio site.
 Para ligar o Gemini:
 
-1. Crie uma conta grátis na [Cloudflare](https://dash.cloudflare.com/sign-up).
-2. No terminal, dentro da pasta `worker/`:
-   ```bash
-   npm install
-   npx wrangler login
-   npx wrangler secret put GEMINI_API_KEY   # cole a chave do Google AI Studio
-   npx wrangler deploy
-   ```
-3. O deploy mostra uma URL tipo `https://aluganeio-chat.SEU-USUARIO.workers.dev`. Cole em `CHAT_ENDPOINT` no `assets/chat.js`.
-4. Se o site ficar em outro endereço (domínio próprio), adicione em `ALLOWED_ORIGINS` no `worker/wrangler.toml` e rode `npx wrangler deploy` de novo.
+1. Crie uma conta grátis em [dash.cloudflare.com](https://dash.cloudflare.com/sign-up).
+2. No menu, vá em **Workers & Pages** → **Create** → **Create Worker** (modelo "Hello World").
+   Dê o nome `aluganeio-chat` e clique em **Deploy**.
+3. Clique em **Edit code**, apague o código de exemplo, cole todo o conteúdo de
+   [`worker/worker.js`](worker/worker.js) e clique em **Deploy**.
+4. Volte ao Worker → **Settings** → **Variables and Secrets** → **Add**:
+   tipo **Secret**, nome `GEMINI_API_KEY`, valor = sua chave do Google AI Studio → **Deploy**.
+5. Copie a URL do Worker (algo como `https://aluganeio-chat.SEU-USUARIO.workers.dev`)
+   e cole em `CHAT_ENDPOINT` no `assets/chat.js` (ou mande para o Claude colocar).
 
-Proteções: a chave nunca vai para o navegador; o Worker só aceita pedidos do site, limita tamanho das mensagens e o número de mensagens por pessoa.
+Se o site for para um domínio próprio, adicione uma variável de texto `ALLOWED_ORIGINS`
+no mesmo lugar do passo 4, com os endereços separados por vírgula
+(ex.: `https://joaolimaarcom.github.io,https://aluganeio.com.br`).
+
+Proteções: a chave nunca vai para o navegador; o Worker só aceita pedidos do site,
+limita o tamanho das mensagens e o número de mensagens por pessoa.
 Recomendado: definir um limite de gastos no Google Cloud para a chave do Gemini.
 
 ## Publicar no GitHub Pages
