@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aluganeio</title>
+<meta name="description" content="Aluguel de carros clássicos: Chevrolet Veraneio e Boca de Sapo para casamentos, ensaios fotográficos, filmes e eventos.">
+<meta property="og:title" content="Aluganeio — clássicos para alugar">
+<meta property="og:description" content="Veraneio e Boca de Sapo para casamentos, ensaios, filmes e eventos.">
+<meta name="theme-color" content="#15211F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Barlow+Condensed:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#inicio" aria-label="Aluganeio, início">
+    <span class="brand-plate" aria-hidden="true">AL</span>
+    <span class="brand-name">Aluganeio</span>
+  </a>
+  <nav class="nav" aria-label="Seções">
+    <a href="#frota">Frota</a>
+    <a href="#ocasioes">Ocasiões</a>
+    <a href="#como-funciona">Como funciona</a>
+  </nav>
+  <a class="btn btn-small" href="#reserva">Reservar</a>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-copy">
+      <p class="eyebrow">Aluguel de clássicos · Chevrolet Veraneio e Boca de Sapo</p>
+      <h1 class="hero-title">Chegue de <span class="swap" id="heroSwap">Veraneio</span>.</h1>
+      <p class="hero-lede">Dois clássicos brasileiros, revisados e prontos para o seu casamento, ensaio, filme ou evento. Você escolhe o carro e a data, a gente cuida do resto.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#reserva">Montar minha reserva</a>
+        <a class="btn btn-ghost" href="#frota">Conhecer a frota</a>
+      </div>
+    </div>
+
+    <div class="hero-stage" aria-hidden="true">
+      <div class="sun"></div>
+      <svg class="car" viewBox="0 0 660 260" role="img">
+        <!-- sombra -->
+        <ellipse cx="330" cy="236" rx="300" ry="10" class="c-shadow"/>
+        <!-- carroceria inferior -->
+        <path class="c-paint" d="M36 122 Q36 112 48 112 L470 112 L604 116 Q622 118 624 132 L626 196 Q626 208 612 208 L48 208 Q34 208 34 196 Z"/>
+        <!-- faixa clara (duas cores) -->
+        <path class="c-top" d="M36 122 Q36 112 48 112 L470 112 L604 116 Q622 118 624 132 L624 146 L36 146 Z"/>
+        <!-- cabine -->
+        <path class="c-top" d="M52 114 L64 50 Q66 42 76 42 L430 42 Q440 42 446 50 L482 114 Z"/>
+        <!-- vidros -->
+        <path class="c-glass" d="M76 104 L84 56 L166 56 L166 104 Z"/>
+        <rect class="c-glass" x="178" y="56" width="92" height="48"/>
+        <rect class="c-glass" x="282" y="56" width="92" height="48"/>
+        <path class="c-glass" d="M386 56 L430 56 L462 104 L386 104 Z"/>
+        <!-- linhas de porta -->
+        <path class="c-line" d="M172 114 L172 200 M276 114 L276 200 M380 114 L380 200"/>
+        <!-- frisos -->
+        <path class="c-chrome-line" d="M40 150 L622 150"/>
+        <!-- macanetas -->
+        <rect class="c-chrome" x="250" y="156" width="16" height="4" rx="2"/>
+        <rect class="c-chrome" x="354" y="156" width="16" height="4" rx="2"/>
+        <!-- para-choques -->
+        <rect class="c-chrome" x="600" y="186" width="40" height="12" rx="4"/>
+        <rect class="c-chrome" x="20" y="186" width="36" height="12" rx="4"/>
+        <!-- farol e lanterna -->
+        <circle class="c-light" cx="616" cy="138" r="8"/>
+        <rect class="c-tail" x="34" y="128" width="8" height="18" rx="2"/>
+        <!-- caixas de roda -->
+        <circle class="c-arch" cx="150" cy="208" r="46"/>
+        <circle class="c-arch" cx="516" cy="208" r="46"/>
+        <!-- rodas -->
+        <g class="wheel" style="transform-origin:150px 208px">
+          <circle class="c-tire" cx="150" cy="208" r="36"/>
+          <circle class="c-rim" cx="150" cy="208" r="20"/>
+          <path class="c-spoke" d="M150 190 L150 226 M132 208 L168 208"/>
+        </g>
+        <g class="wheel" style="transform-origin:516px 208px">
+          <circle class="c-tire" cx="516" cy="208" r="36"/>
+          <circle class="c-rim" cx="516" cy="208" r="20"/>
+          <path class="c-spoke" d="M516 190 L516 226 M498 208 L534 208"/>
+        </g>
+        <!-- facho do farol -->
+        <path class="c-beam" d="M624 132 L660 112 L660 164 Z"/>
+      </svg>
+      <div class="road"><span></span></div>
+      <div class="plate hero-plate">
+        <small>ALUGANEIO · BR</small>
+        <strong>VE·0001</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAIXA -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Casamentos</span><span>Ensaios fotográficos</span><span>Filmes e clipes</span><span>Publicidade</span><span>Aniversários</span><span>Eventos de empresa</span>
+      <span>Casamentos</span><span>Ensaios fotográficos</span><span>Filmes e clipes</span><span>Publicidade</span><span>Aniversários</span><span>Eventos de empresa</span>
+    </div>
+  </div>
+
+  <!-- FROTA -->
+  <section class="section" id="frota">
+    <div class="section-head">
+      <p class="eyebrow">A frota</p>
+      <h2>Dois carros. Nenhum igual.</h2>
+      <p class="section-lede">Cada um tem sua história e seu estilo. Escolha o que combina com a sua ocasião.</p>
+    </div>
+
+    <div class="fleet">
+      <article class="car-card" data-car="veraneio">
+        <div class="photo">
+          <img src="assets/fotos/veraneio.jpg" alt="Chevrolet Veraneio da Aluganeio" loading="lazy" onerror="this.remove()">
+          <div class="photo-empty">
+            <div class="plate"><small>ALUGANEIO · BR</small><strong>VE·0001</strong></div>
+            <span>Foto em breve</span>
+          </div>
+        </div>
+        <div class="car-body">
+          <div class="car-title">
+            <h3>Chevrolet Veraneio</h3>
+            <span class="tag">O utilitário mais famoso do Brasil</span>
+          </div>
+          <p>Espaçosa, imponente e cheia de presença. A Veraneio marcou gerações nas estradas brasileiras e hoje faz qualquer chegada virar foto.</p>
+          <dl class="specs">
+            <div><dt>Ano</dt><dd class="todo">a definir</dd></div>
+            <div><dt>Cor</dt><dd class="todo">a definir</dd></div>
+            <div><dt>Lugares</dt><dd class="todo">a definir</dd></div>
+            <div><dt>Ideal para</dt><dd>Casamentos, ensaios, filmes</dd></div>
+          </dl>
+          <a class="btn btn-block" href="#reserva" data-pick="Veraneio">Reservar a Veraneio</a>
+        </div>
+      </article>
+
+      <article class="car-card" data-car="boca">
+        <div class="photo">
+          <img src="assets/fotos/boca-de-sapo.jpg" alt="Boca de Sapo da Aluganeio" loading="lazy" onerror="this.remove()">
+          <div class="photo-empty">
+            <div class="plate"><small>ALUGANEIO · BR</small><strong>BS·0002</strong></div>
+            <span>Foto em breve</span>
+          </div>
+        </div>
+        <div class="car-body">
+          <div class="car-title">
+            <h3>Boca de Sapo</h3>
+            <span class="tag">O apelido diz tudo</span>
+          </div>
+          <p>A frente inconfundível que ganhou apelido nas ruas. Um carro com personalidade de sobra para quem quer fugir do comum.</p>
+          <dl class="specs">
+            <div><dt>Ano</dt><dd class="todo">a definir</dd></div>
+            <div><dt>Cor</dt><dd class="todo">a definir</dd></div>
+            <div><dt>Lugares</dt><dd class="todo">a definir</dd></div>
+            <div><dt>Ideal para</dt><dd>Ensaios, clipes, eventos</dd></div>
+          </dl>
+          <a class="btn btn-block" href="#reserva" data-pick="Boca de Sapo">Reservar o Boca de Sapo</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- OCASIÕES -->
+  <section class="section section-alt" id="ocasioes">
+    <div class="section-head">
+      <p class="eyebrow">Ocasiões</p>
+      <h2>Para os dias que merecem entrada de cinema.</h2>
+    </div>
+    <div class="occasions">
+      <div class="occ">
+        <h3>Casamentos</h3>
+        <p>Chegada da noiva, saída dos noivos e fotos com o carro decorado do jeito que vocês quiserem.</p>
+      </div>
+      <div class="occ">
+        <h3>Ensaios fotográficos</h3>
+        <p>Pré-wedding, moda, 15 anos ou ensaio de família. O carro vira cenário e figurino ao mesmo tempo.</p>
+      </div>
+      <div class="occ">
+        <h3>Filmes, clipes e publicidade</h3>
+        <p>Um clássico autêntico para produções que pedem época, estrada e caráter.</p>
+      </div>
+      <div class="occ">
+        <h3>Eventos e aniversários</h3>
+        <p>Ativações de marca, festas temáticas e presentes que ninguém esquece.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="section-head">
+      <p class="eyebrow">Como funciona</p>
+      <h2>Da primeira mensagem à chegada.</h2>
+    </div>
+    <ol class="steps">
+      <li>
+        <span class="odo" aria-hidden="true">0 0 1</span>
+        <h3>Escolha o carro e a data</h3>
+        <p>Preencha a reserva abaixo. Ela vira uma mensagem pronta no WhatsApp.</p>
+      </li>
+      <li>
+        <span class="odo" aria-hidden="true">0 0 2</span>
+        <h3>Combine o roteiro</h3>
+        <p>Confirmamos disponibilidade, horários, locais e detalhes como decoração.</p>
+      </li>
+      <li>
+        <span class="odo" aria-hidden="true">0 0 3</span>
+        <h3>Garanta a data</h3>
+        <p>Com tudo acertado, a data fica reservada só para você.</p>
+      </li>
+      <li>
+        <span class="odo" aria-hidden="true">0 0 4</span>
+        <h3>Aproveite o dia</h3>
+        <p>O carro chega limpo, revisado e no horário combinado.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- RESERVA -->
+  <section class="section reserve" id="reserva">
+    <div class="reserve-grid">
+      <div class="reserve-copy">
+        <p class="eyebrow">Reserva</p>
+        <h2>Monte seu pedido em um minuto.</h2>
+        <p>Preencha os campos e toque em enviar. Abrimos o WhatsApp com sua mensagem pronta, é só confirmar o envio.</p>
+        <div class="ticket" aria-live="polite">
+          <div class="ticket-row"><span>Carro</span><strong id="tkCar">Veraneio</strong></div>
+          <div class="ticket-row"><span>Data</span><strong id="tkDate">a escolher</strong></div>
+          <div class="ticket-row"><span>Ocasião</span><strong id="tkOcc">Casamento</strong></div>
+          <div class="ticket-row"><span>Duração</span><strong id="tkHours">4 horas</strong></div>
+        </div>
+      </div>
+
+      <form class="form" id="reserveForm" novalidate>
+        <fieldset class="pick">
+          <legend>Qual carro?</legend>
+          <label class="pick-opt">
+            <input type="radio" name="car" id="carVeraneio" value="Veraneio" checked>
+            <span><strong>Veraneio</strong><small>Chevrolet</small></span>
+          </label>
+          <label class="pick-opt">
+            <input type="radio" name="car" id="carBoca" value="Boca de Sapo">
+            <span><strong>Boca de Sapo</strong><small>Clássico</small></span>
+          </label>
+        </fieldset>
+
+        <div class="row">
+          <label class="field">
+            <span>Data</span>
+            <input type="date" id="fDate" name="date" required>
+          </label>
+          <label class="field">
+            <span>Ocasião</span>
+            <select id="fOcc" name="occasion">
+              <option>Casamento</option>
+              <option>Ensaio fotográfico</option>
+              <option>Filme, clipe ou publicidade</option>
+              <option>Aniversário</option>
+              <option>Evento de empresa</option>
+              <option>Outro</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Duração: <output id="fHoursOut">4 horas</output></span>
+          <input type="range" id="fHours" name="hours" min="1" max="12" value="4">
+        </label>
+
+        <div class="row">
+          <label class="field">
+            <span>Seu nome</span>
+            <input type="text" id="fName" name="name" autocomplete="name" required placeholder="Maria Silva">
+          </label>
+          <label class="field">
+            <span>Cidade do evento</span>
+            <input type="text" id="fCity" name="city" autocomplete="address-level2" placeholder="São Paulo">
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Algum detalhe? <em>(opcional)</em></span>
+          <textarea id="fNotes" name="notes" rows="3" placeholder="Horário, locais, decoração..."></textarea>
+        </label>
+
+        <p class="form-error" id="formError" hidden></p>
+        <button class="btn btn-block btn-big" type="submit">Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a class="brand" href="#inicio">
+        <span class="brand-plate" aria-hidden="true">AL</span>
+        <span class="brand-name">Aluganeio</span>
+      </a>
+      <p class="muted">Aluguel de carros clássicos.</p>
+    </div>
+    <div class="footer-contact">
+      <span class="muted">WhatsApp</span>
+      <strong id="footerPhone">(00) 00000-0000</strong>
+    </div>
+    <p class="muted small">© <span id="year">2026</span> Aluganeio</p>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
