@@ -8,7 +8,7 @@
 
 // Depois de publicar o Worker, cole aqui a URL dele
 // (ex.: "https://aluganeio-chat.SEU-USUARIO.workers.dev")
-const CHAT_ENDPOINT = "";
+const CHAT_ENDPOINT = "https://aluganeio.jlrodrigues6900.workers.dev/";
 
 (() => {
   const $ = (sel) => document.querySelector(sel);

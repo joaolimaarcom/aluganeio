@@ -24,7 +24,8 @@ worker/worker.js           servidor do chat (arquivo único para colar na Cloudf
 - [ ] Ano de cada carro e lotação da Veraneio
 - [ ] Confirmar pacotes (duração, itens inclusos, preços ou "sob consulta")
 - [ ] Confirmar respostas das Dúvidas (motorista, decoração, cidades, sinal, chuva)
-- [ ] Publicar o Worker do chat e colar a URL em `assets/chat.js`
+- [x] Worker do chat publicado: https://aluganeio.jlrodrigues6900.workers.dev/
+- [ ] Cadastrar o secret GEMINI_API_KEY no Worker
 - [ ] Álbuns de fotos para a galeria
 
 ## Chat com Gemini (tudo pelo navegador, sem instalar nada)
