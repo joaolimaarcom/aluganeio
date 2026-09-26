@@ -15,6 +15,13 @@
 </head>
 <body>
 
+<div class="backdrop" aria-hidden="true">
+  <img class="bd-sharp" src="assets/fotos/os-dois.jpg" alt="">
+  <img class="bd-blur" src="assets/fotos/os-dois.jpg" alt="">
+  <div class="bd-shade"></div>
+  <div class="bd-veil"></div>
+</div>
+
 <header class="topbar">
   <a class="brand" href="#inicio" aria-label="Aluganeio, início">
     <span class="brand-plate" aria-hidden="true">AL</span>
@@ -37,62 +44,16 @@
       <h1 class="hero-title">Chegue de <span class="swap" id="heroSwap">Veraneio</span>.</h1>
       <p class="hero-lede">Dois Chevrolet amarelos, cromados e prontos para o seu casamento, ensaio, filme ou evento. Você escolhe o carro e a data, a gente cuida do resto.</p>
       <div class="hero-actions">
-        <a class="btn" href="#reserva">Montar minha reserva</a>
-        <a class="btn btn-ghost" href="#frota">Conhecer a frota</a>
+        <a class="btn btn-plate" href="#reserva">Montar minha reserva</a>
+        <a class="btn btn-glass" href="#frota">Conhecer a frota</a>
       </div>
     </div>
-
-    <div class="hero-stage" aria-hidden="true">
-      <div class="sun"></div>
-      <svg class="car" viewBox="0 0 660 260" role="img">
-        <!-- sombra -->
-        <ellipse cx="330" cy="236" rx="300" ry="10" class="c-shadow"/>
-        <!-- carroceria inferior -->
-        <path class="c-paint" d="M36 122 Q36 112 48 112 L470 112 L604 116 Q622 118 624 132 L626 196 Q626 208 612 208 L48 208 Q34 208 34 196 Z"/>
-        <!-- faixa clara (duas cores) -->
-        <path class="c-top" d="M36 122 Q36 112 48 112 L470 112 L604 116 Q622 118 624 132 L624 146 L36 146 Z"/>
-        <!-- cabine -->
-        <path class="c-top" d="M52 114 L64 50 Q66 42 76 42 L430 42 Q440 42 446 50 L482 114 Z"/>
-        <!-- vidros -->
-        <path class="c-glass" d="M76 104 L84 56 L166 56 L166 104 Z"/>
-        <rect class="c-glass" x="178" y="56" width="92" height="48"/>
-        <rect class="c-glass" x="282" y="56" width="92" height="48"/>
-        <path class="c-glass" d="M386 56 L430 56 L462 104 L386 104 Z"/>
-        <!-- linhas de porta -->
-        <path class="c-line" d="M172 114 L172 200 M276 114 L276 200 M380 114 L380 200"/>
-        <!-- frisos -->
-        <path class="c-chrome-line" d="M40 150 L622 150"/>
-        <!-- macanetas -->
-        <rect class="c-chrome" x="250" y="156" width="16" height="4" rx="2"/>
-        <rect class="c-chrome" x="354" y="156" width="16" height="4" rx="2"/>
-        <!-- para-choques -->
-        <rect class="c-chrome" x="600" y="186" width="40" height="12" rx="4"/>
-        <rect class="c-chrome" x="20" y="186" width="36" height="12" rx="4"/>
-        <!-- farol e lanterna -->
-        <circle class="c-light" cx="616" cy="138" r="8"/>
-        <rect class="c-tail" x="34" y="128" width="8" height="18" rx="2"/>
-        <!-- caixas de roda -->
-        <circle class="c-arch" cx="150" cy="208" r="46"/>
-        <circle class="c-arch" cx="516" cy="208" r="46"/>
-        <!-- rodas -->
-        <g class="wheel" style="transform-origin:150px 208px">
-          <circle class="c-tire" cx="150" cy="208" r="36"/>
-          <circle class="c-rim" cx="150" cy="208" r="20"/>
-          <path class="c-spoke" d="M150 190 L150 226 M132 208 L168 208"/>
-        </g>
-        <g class="wheel" style="transform-origin:516px 208px">
-          <circle class="c-tire" cx="516" cy="208" r="36"/>
-          <circle class="c-rim" cx="516" cy="208" r="20"/>
-          <path class="c-spoke" d="M516 190 L516 226 M498 208 L534 208"/>
-        </g>
-        <!-- facho do farol -->
-        <path class="c-beam" d="M624 132 L660 112 L660 164 Z"/>
-      </svg>
-      <div class="road"><span></span></div>
-      <div class="plate hero-plate">
-        <small>ALUGANEIO · BR</small>
-        <strong>VE·0001</strong>
+    <div class="hero-meta">
+      <div class="hero-plates" aria-hidden="true">
+        <div class="plate"><small>ALUGANEIO · BR</small><strong>VE·0001</strong></div>
+        <div class="plate"><small>ALUGANEIO · BR</small><strong>BS·0002</strong></div>
       </div>
+      <a class="scroll-cue" href="#frota"><span aria-hidden="true"></span>Role para ver a frota</a>
     </div>
   </section>
 

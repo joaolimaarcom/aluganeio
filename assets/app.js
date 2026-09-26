@@ -90,3 +90,19 @@ form.addEventListener("submit", (e) => {
 
 $("#footerPhone").textContent = WHATSAPP_LABEL;
 $("#year").textContent = new Date().getFullYear();
+
+// Fundo: foto nítida no topo, desfoca conforme rola a página
+(() => {
+  const root = document.documentElement;
+  let ticking = false;
+  const update = () => {
+    const o = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.6)));
+    root.style.setProperty("--blur-o", o.toFixed(3));
+    ticking = false;
+  };
+  window.addEventListener("scroll", () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
