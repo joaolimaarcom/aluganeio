@@ -2,9 +2,9 @@
 // Aluganeio — configuração e interações
 // ============================================================
 
-// TROCAR: número de WhatsApp com DDI + DDD, só dígitos (ex.: 5511987654321)
-const WHATSAPP = "5500000000000";
-const WHATSAPP_LABEL = "(00) 00000-0000";
+// WhatsApp com DDI + DDD, só dígitos
+const WHATSAPP = "5534997729702";
+const WHATSAPP_LABEL = "(34) 99772-9702";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -88,7 +88,9 @@ form.addEventListener("submit", (e) => {
   window.open(url, "_blank", "noopener");
 });
 
-$("#footerPhone").textContent = WHATSAPP_LABEL;
+const footerPhone = $("#footerPhone");
+footerPhone.textContent = WHATSAPP_LABEL;
+footerPhone.href = `https://wa.me/${WHATSAPP}`;
 $("#year").textContent = new Date().getFullYear();
 
 // Fundo: foto nítida no topo, desfoca conforme rola a página

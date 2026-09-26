@@ -414,7 +414,9 @@ p { margin: 0; }
 }
 .footer-inner > div:first-child { display: grid; gap: 8px; }
 .footer-contact { display: grid; gap: 2px; }
-.footer-contact strong { font: 700 22px/1 var(--f-data); letter-spacing: 0.04em; }
+.footer-contact a { text-decoration: none; }
+.footer-contact a:hover { color: var(--paint); }
+.footer-contact strong, .footer-contact a { font: 700 22px/1 var(--f-data); letter-spacing: 0.04em; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
