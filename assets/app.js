@@ -9,6 +9,36 @@ const waLink = (text) => `https://wa.me/${WHATSAPP}${text ? `?text=${encodeURICo
 
 const $ = (sel) => document.querySelector(sel);
 
+// Contagem de acessos para o painel (painel.html).
+// Sem cookies e sem dados pessoais: só tipo do evento, origem e aparelho.
+const API_URL = "https://aluganeio.jlrodrigues6900.workers.dev/";
+function track(type, extra) {
+  if (location.protocol !== "https:") return; // não conta testes locais
+  try { if (localStorage.getItem("aluganeio:nao-contar")) return; } catch (e) { /* sem storage: conta normal */ }
+  const w = window.innerWidth;
+  const body = JSON.stringify({
+    t: type,
+    p: location.pathname,
+    r: document.referrer,
+    u: new URLSearchParams(location.search).get("utm_source") || "",
+    d: w < 768 ? "celular" : w < 1100 && matchMedia("(pointer: coarse)").matches ? "tablet" : "computador",
+    x: extra,
+  });
+  const blob = new Blob([body], { type: "text/plain" });
+  if (!(navigator.sendBeacon && navigator.sendBeacon(`${API_URL}e`, blob))) {
+    fetch(`${API_URL}e`, { method: "POST", body, keepalive: true, headers: { "Content-Type": "text/plain" } }).catch(() => {});
+  }
+}
+track("pageview");
+
+// Cliques nos links de WhatsApp (botão flutuante, rodapé, chat)
+document.addEventListener("click", (e) => {
+  const a = e.target.closest && e.target.closest('a[href^="https://wa.me"]');
+  if (!a) return;
+  const where = { dockWa: "botao-flutuante", footerPhone: "rodape", chatWa: "chat" }[a.id] || "outro";
+  track("whatsapp", { where });
+});
+
 // Título do hero alterna entre os dois carros
 (() => {
   const el = $("#heroSwap");
@@ -99,6 +129,10 @@ form.addEventListener("submit", (e) => {
   if (city) lines.push(`Cidade: ${city}`);
   if (notes) lines.push("", `Detalhes: ${notes}`);
 
+  track("reserva", {
+    car: form.car.value, package: pkg.value, occasion: occ.value,
+    eventDate: date.value, hours: hours.value, city,
+  });
   window.open(waLink(lines.join("\n")), "_blank", "noopener");
 });
 

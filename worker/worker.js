@@ -3,8 +3,14 @@
 // Recebe as mensagens do site, chama o Gemini com a chave guardada como
 // secret e devolve { reply }. O prompt fica aqui, nunca no navegador.
 //
-// Como publicar sem instalar nada: veja o README.md, seção "Chat com Gemini".
-// Única configuração obrigatória no painel: o secret GEMINI_API_KEY.
+// Também registra os acessos do site (sem cookies, sem guardar IP) e
+// entrega os números para o painel (painel.html), protegido por senha.
+//
+// Como publicar sem instalar nada: veja o README.md.
+// Configuração no painel da Cloudflare:
+//   - secret GEMINI_API_KEY (chat)
+//   - secret PAINEL_SENHA   (senha do painel)
+//   - binding D1 com o nome DB (banco onde ficam os acessos)
 // ============================================================
 
 // Sites que podem usar o chat (o painel pode sobrescrever com a variável ALLOWED_ORIGINS)
@@ -70,8 +76,8 @@ function corsHeaders(origin, env) {
     ok,
     headers: {
       "Access-Control-Allow-Origin": ok ? origin : allowed[0] || "null",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
       "Access-Control-Max-Age": "86400",
       Vary: "Origin",
     },
@@ -81,15 +87,15 @@ function corsHeaders(origin, env) {
 const json = (body, status, headers) =>
   new Response(JSON.stringify(body), { status, headers: { ...headers, "Content-Type": "application/json; charset=utf-8" } });
 
-function rateLimited(ip) {
+function rateLimited(ip, map = hits, limit = RATE_LIMIT, windowMs = RATE_WINDOW_MS) {
   const now = Date.now();
-  const entry = hits.get(ip);
-  if (!entry || now - entry.start > RATE_WINDOW_MS) {
-    hits.set(ip, { start: now, count: 1 });
+  const entry = map.get(ip);
+  if (!entry || now - entry.start > windowMs) {
+    map.set(ip, { start: now, count: 1 });
     return false;
   }
   entry.count += 1;
-  return entry.count > RATE_LIMIT;
+  return entry.count > limit;
 }
 
 function cleanMessages(raw) {
@@ -124,43 +130,249 @@ async function askGemini(messages, env, apiKey) {
   return text;
 }
 
-// Acha a chave mesmo se o nome no painel tiver espaço ou letras minúsculas
-function findApiKey(env) {
-  if (typeof env.GEMINI_API_KEY === "string" && env.GEMINI_API_KEY.trim()) return env.GEMINI_API_KEY.trim();
-  const name = Object.keys(env).find((k) => k.trim().toUpperCase().replace(/[\s-]+/g, "_") === "GEMINI_API_KEY");
+// Acha um secret mesmo se o nome no painel tiver espaço, hífen ou letras minúsculas
+function findSecret(env, wanted) {
+  if (typeof env[wanted] === "string" && env[wanted].trim()) return env[wanted].trim();
+  const name = Object.keys(env).find((k) => k.trim().toUpperCase().replace(/[\s-]+/g, "_") === wanted);
   const value = name && env[name];
   return typeof value === "string" && value.trim() ? value.trim() : "";
 }
+const findApiKey = (env) => findSecret(env, "GEMINI_API_KEY");
+// Banco D1: aceita o binding com qualquer nome
+const findDb = (env) => env.DB || Object.values(env).find((v) => v && typeof v.prepare === "function" && typeof v.batch === "function") || null;
+
+// ============================================================
+// Acessos: registro e painel
+// ============================================================
+
+const EVENT_TYPES = new Set(["pageview", "whatsapp", "reserva"]);
+const BOT_UA = /bot|crawl|spider|slurp|headless|lighthouse|preview|facebookexternalhit|whatsapp\//i;
+const DAY_MS = 86400000;
+const TZ_OFFSET_S = 3 * 3600; // horário de Brasília (UTC-3, sem horário de verão)
+const eventHits = new Map();
+const loginFails = new Map();
+let schemaReady = false;
+
+async function ensureSchema(db) {
+  if (schemaReady) return;
+  await db.batch([
+    db.prepare(`CREATE TABLE IF NOT EXISTS events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      ts INTEGER NOT NULL,
+      type TEXT NOT NULL,
+      visitor TEXT,
+      path TEXT,
+      ref TEXT,
+      device TEXT,
+      country TEXT,
+      city TEXT,
+      data TEXT
+    )`),
+    db.prepare("CREATE INDEX IF NOT EXISTS events_ts ON events (ts)"),
+    db.prepare("CREATE INDEX IF NOT EXISTS events_type_ts ON events (type, ts)"),
+  ]);
+  schemaReady = true;
+}
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Identificador anônimo que muda todo dia: conta pessoas diferentes sem
+// guardar IP nem cookie e sem permitir seguir alguém entre um dia e outro.
+async function visitorId(request, env) {
+  const ip = request.headers.get("CF-Connecting-IP") || "local";
+  const ua = request.headers.get("User-Agent") || "";
+  const day = new Date(Date.now() - TZ_OFFSET_S * 1000).toISOString().slice(0, 10);
+  return (await sha256(`${ip}|${ua}|${day}|${findApiKey(env) || "aluganeio"}`)).slice(0, 16);
+}
+
+const clip = (v, n) => (typeof v === "string" ? v.trim().slice(0, n) : "");
+
+function sourceOf(referrer, utm) {
+  const u = clip(utm, 40).toLowerCase();
+  if (u) {
+    if (/^(ig|insta)/.test(u)) return "Instagram";
+    if (/^(fb|face)/.test(u)) return "Facebook";
+    if (/^(wa|whats|zap)/.test(u)) return "WhatsApp";
+    if (/^goog/.test(u)) return "Google";
+    if (/^tiktok/.test(u)) return "TikTok";
+    return u.charAt(0).toUpperCase() + u.slice(1);
+  }
+  let host = "";
+  try { host = new URL(referrer).hostname.replace(/^www\./, ""); } catch { return "Direto"; }
+  if (!host || host.endsWith("github.io")) return "Direto";
+  if (/instagram\.com$/.test(host)) return "Instagram";
+  if (/(facebook\.com|fb\.com|fb\.me)$/.test(host)) return "Facebook";
+  if (/(whatsapp\.com|wa\.me)$/.test(host)) return "WhatsApp";
+  if (/(^|\.)google\./.test(host)) return "Google";
+  if (/bing\.com$/.test(host)) return "Bing";
+  if (/tiktok\.com$/.test(host)) return "TikTok";
+  if (/(youtube\.com|youtu\.be)$/.test(host)) return "YouTube";
+  if (/(t\.co|twitter\.com|x\.com)$/.test(host)) return "X (Twitter)";
+  return host.slice(0, 40);
+}
+
+function eventData(type, x) {
+  x = x && typeof x === "object" ? x : {};
+  if (type === "whatsapp") return { where: clip(x.where, 30) };
+  if (type === "reserva") {
+    return {
+      car: clip(x.car, 30), package: clip(x.package, 40), occasion: clip(x.occasion, 40),
+      eventDate: /^\d{4}-\d{2}-\d{2}$/.test(x.eventDate || "") ? x.eventDate : "",
+      hours: Math.max(0, Math.min(24, parseInt(x.hours, 10) || 0)), city: clip(x.city, 60),
+    };
+  }
+  return {};
+}
+
+async function saveEvent(db, request, env, row) {
+  const cf = request.cf || {};
+  await ensureSchema(db);
+  await db.prepare(
+    "INSERT INTO events (ts, type, visitor, path, ref, device, country, city, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  ).bind(
+    Date.now(), row.type, await visitorId(request, env), clip(row.path, 120) || "/", row.ref || "",
+    row.device || "", clip(cf.country || "", 4), clip(cf.city || "", 60), JSON.stringify(row.data || {})
+  ).run();
+  // limpeza ocasional: guarda até ~13 meses
+  if (Math.random() < 0.01) await db.prepare("DELETE FROM events WHERE ts < ?").bind(Date.now() - 400 * DAY_MS).run();
+}
+
+async function handleEvent(request, env, ctx, cors) {
+  const noContent = new Response(null, { status: 204, headers: cors.headers });
+  const db = findDb(env);
+  if (!db || !cors.ok || BOT_UA.test(request.headers.get("User-Agent") || "")) return noContent;
+  const ip = request.headers.get("CF-Connecting-IP") || "local";
+  if (rateLimited(ip, eventHits, 120)) return noContent;
+  let body;
+  try { body = JSON.parse((await request.text()).slice(0, 4000)); } catch { return noContent; }
+  if (!body || !EVENT_TYPES.has(body.t)) return noContent;
+  const device = ["celular", "tablet", "computador"].includes(body.d) ? body.d : "";
+  const task = saveEvent(db, request, env, {
+    type: body.t, path: body.p, device, data: eventData(body.t, body.x),
+    ref: body.t === "pageview" ? sourceOf(body.r, body.u) : "",
+  }).catch((e) => console.error("evento", e));
+  if (ctx?.waitUntil) ctx.waitUntil(task); else await task;
+  return noContent;
+}
+
+async function checkPassword(request, env) {
+  const senha = findSecret(env, "PAINEL_SENHA");
+  const given = (request.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
+  if (!senha || !given) return false;
+  const [a, b] = await Promise.all([sha256(senha), sha256(given)]);
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+async function handleStats(request, env, cors) {
+  const ip = request.headers.get("CF-Connecting-IP") || "local";
+  const fails = loginFails.get(ip);
+  if (fails && fails.count >= 10 && Date.now() - fails.start < 15 * 60 * 1000) {
+    return json({ error: "Muitas tentativas. Espere 15 minutos." }, 429, cors.headers);
+  }
+  if (!findSecret(env, "PAINEL_SENHA")) return json({ error: "Senha do painel não configurada (secret PAINEL_SENHA)." }, 500, cors.headers);
+  if (!(await checkPassword(request, env))) {
+    rateLimited(ip, loginFails, 10, 15 * 60 * 1000);
+    return json({ error: "Senha incorreta." }, 401, cors.headers);
+  }
+  loginFails.delete(ip);
+  const db = findDb(env);
+  if (!db) return json({ error: "Banco de dados não conectado (binding D1 com o nome DB)." }, 500, cors.headers);
+  await ensureSchema(db);
+
+  const days = [7, 30, 90].includes(Number(new URL(request.url).searchParams.get("days"))) ? Number(new URL(request.url).searchParams.get("days")) : 30;
+  const now = Date.now();
+  // o período começa à meia-noite (horário de Brasília) de days-1 dias atrás
+  const todayStart = Math.floor((now - TZ_OFFSET_S * 1000) / DAY_MS) * DAY_MS + TZ_OFFSET_S * 1000;
+  const start = todayStart - (days - 1) * DAY_MS;
+  const prevStart = start - days * DAY_MS;
+  const DAY = `date(ts / 1000 - ${TZ_OFFSET_S}, 'unixepoch')`;
+  const q = (sql, ...args) => db.prepare(sql).bind(...args);
+
+  const [totals, prevTotals, daily, sources, devices, cities, cars, packages, waWhere, reservas, chats] = (await db.batch([
+    q("SELECT type, COUNT(*) AS n, COUNT(DISTINCT visitor || " + DAY + ") AS v FROM events WHERE ts >= ? GROUP BY type", start),
+    q("SELECT type, COUNT(*) AS n, COUNT(DISTINCT visitor || " + DAY + ") AS v FROM events WHERE ts >= ? AND ts < ? GROUP BY type", prevStart, start),
+    q(`SELECT ${DAY} AS day,
+         COUNT(DISTINCT CASE WHEN type = 'pageview' THEN visitor END) AS visits,
+         SUM(type = 'pageview') AS views, SUM(type = 'whatsapp') AS whatsapp,
+         SUM(type = 'reserva') AS reservas, SUM(type = 'chat') AS chat
+       FROM events WHERE ts >= ? GROUP BY day ORDER BY day`, start),
+    q(`SELECT ref AS k, COUNT(DISTINCT visitor || ${DAY}) AS n FROM events WHERE type = 'pageview' AND ts >= ? GROUP BY k ORDER BY n DESC LIMIT 8`, start),
+    q(`SELECT device AS k, COUNT(DISTINCT visitor || ${DAY}) AS n FROM events WHERE type = 'pageview' AND ts >= ? AND device <> '' GROUP BY k ORDER BY n DESC`, start),
+    q(`SELECT city AS k, COUNT(DISTINCT visitor || ${DAY}) AS n FROM events WHERE type = 'pageview' AND ts >= ? AND city <> '' GROUP BY k ORDER BY n DESC LIMIT 8`, start),
+    q("SELECT json_extract(data, '$.car') AS k, COUNT(*) AS n FROM events WHERE type = 'reserva' AND ts >= ? GROUP BY k ORDER BY n DESC", start),
+    q("SELECT json_extract(data, '$.package') AS k, COUNT(*) AS n FROM events WHERE type = 'reserva' AND ts >= ? GROUP BY k ORDER BY n DESC", start),
+    q("SELECT json_extract(data, '$.where') AS k, COUNT(*) AS n FROM events WHERE type = 'whatsapp' AND ts >= ? GROUP BY k ORDER BY n DESC", start),
+    q("SELECT ts, data FROM events WHERE type = 'reserva' AND ts >= ? ORDER BY ts DESC LIMIT 50", start),
+    q("SELECT ts, json_extract(data, '$.q') AS q FROM events WHERE type = 'chat' AND ts >= ? ORDER BY ts DESC LIMIT 40", start),
+  ])).map((r) => r.results || []);
+
+  const sum = (rows) => Object.fromEntries(rows.map((r) => [r.type, { n: r.n, v: r.v }]));
+  return json({
+    days, start, generatedAt: now,
+    totals: sum(totals), prevTotals: sum(prevTotals),
+    daily, sources, devices, cities, cars, packages, waWhere,
+    reservas: reservas.map((r) => ({ ts: r.ts, ...JSON.parse(r.data || "{}") })),
+    chats,
+  }, 200, { ...cors.headers, "Cache-Control": "no-store" });
+}
+
+// ============================================================
+// Roteamento
+// ============================================================
+
+async function handleChat(request, env, ctx, cors, apiKey) {
+  if (!cors.ok) return json({ error: "Origem não permitida" }, 403, cors.headers);
+  if (!apiKey) return json({ error: "GEMINI_API_KEY não configurada" }, 500, cors.headers);
+
+  const ip = request.headers.get("CF-Connecting-IP") || "local";
+  if (rateLimited(ip)) return json({ error: "Muitas mensagens, tente em alguns minutos" }, 429, cors.headers);
+
+  let body;
+  try { body = await request.json(); } catch { return json({ error: "JSON inválido" }, 400, cors.headers); }
+  const messages = cleanMessages(body?.messages);
+  if (!messages) return json({ error: "Mensagens inválidas" }, 400, cors.headers);
+
+  // guarda só a pergunta, para o painel mostrar o que as pessoas querem saber
+  const db = findDb(env);
+  if (db) {
+    const task = saveEvent(db, request, env, { type: "chat", path: "/", data: { q: messages[messages.length - 1].content.slice(0, 300) } })
+      .catch((e) => console.error("chat log", e));
+    if (ctx?.waitUntil) ctx.waitUntil(task); else await task;
+  }
+
+  try {
+    const reply = await askGemini(messages, env, apiKey);
+    return json({ reply }, 200, cors.headers);
+  } catch (e) {
+    console.error(e);
+    return json({ error: "Falha ao gerar resposta" }, 502, cors.headers);
+  }
+}
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
     const cors = corsHeaders(origin, env);
-    const apiKey = findApiKey(env);
+    const path = new URL(request.url).pathname.replace(/\/+$/, "") || "/";
 
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors.headers });
-    // Diagnóstico: abrir a URL no navegador mostra só os NOMES das variáveis, nunca os valores
-    if (request.method === "GET") {
-      return json({ chat: "Aluganeio", chaveConfigurada: Boolean(apiKey), variaveis: Object.keys(env) }, 200, cors.headers);
+    if (request.method === "POST" && path === "/e") return handleEvent(request, env, ctx, cors);
+    if (request.method === "GET" && path === "/stats") return handleStats(request, env, cors);
+    if (request.method === "POST" && path === "/") return handleChat(request, env, ctx, cors, findApiKey(env));
+    // Diagnóstico: abrir a URL no navegador mostra o que está configurado (sem mostrar valores)
+    if (request.method === "GET" && path === "/") {
+      return json({
+        chat: "Aluganeio",
+        chaveConfigurada: Boolean(findApiKey(env)),
+        senhaPainelConfigurada: Boolean(findSecret(env, "PAINEL_SENHA")),
+        bancoConectado: Boolean(findDb(env)),
+      }, 200, cors.headers);
     }
-    if (request.method !== "POST") return json({ error: "Use POST" }, 405, cors.headers);
-    if (!cors.ok) return json({ error: "Origem não permitida" }, 403, cors.headers);
-    if (!apiKey) return json({ error: "GEMINI_API_KEY não configurada" }, 500, cors.headers);
-
-    const ip = request.headers.get("CF-Connecting-IP") || "local";
-    if (rateLimited(ip)) return json({ error: "Muitas mensagens, tente em alguns minutos" }, 429, cors.headers);
-
-    let body;
-    try { body = await request.json(); } catch { return json({ error: "JSON inválido" }, 400, cors.headers); }
-    const messages = cleanMessages(body?.messages);
-    if (!messages) return json({ error: "Mensagens inválidas" }, 400, cors.headers);
-
-    try {
-      const reply = await askGemini(messages, env, apiKey);
-      return json({ reply }, 200, cors.headers);
-    } catch (e) {
-      console.error(e);
-      return json({ error: "Falha ao gerar resposta" }, 502, cors.headers);
-    }
+    return json({ error: "Não encontrado" }, 404, cors.headers);
   },
 };
