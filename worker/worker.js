@@ -30,10 +30,10 @@ EMPRESA
 - Reserva: pelo formulário do site (seção "Reserva"), que monta a mensagem no WhatsApp, ou direto no WhatsApp.
 
 FROTA
-1. Chevrolet Veraneio: utilitário clássico brasileiro, amarela do para-choque ao teto, grade preta e cromados. Espaçosa, leva mais passageiros. Ideal para casamentos, ensaios e filmes.
-2. Chevrolet 3100 "Boca de Sapo": picape clássica de cabine simples, amarela com pintura envelhecida (pátina), grade cromada de frisos que deu o apelido, rodas modernas. Ideal para o casal, ensaios e decoração de festas e casamentos no campo.
+1. Chevrolet Veraneio 1972: utilitário clássico brasileiro, amarela do para-choque ao teto, grade preta e cromados. Espaçosa, leva mais passageiros. Ideal para casamentos, ensaios e filmes.
+2. Chevrolet 3100 "Boca de Sapo" 1950: picape clássica de cabine simples, amarela com pintura envelhecida (pátina), grade cromada de frisos que deu o apelido, rodas modernas. Ideal para o casal, ensaios e decoração de festas e casamentos no campo.
 - Dá para alugar os dois carros juntos no mesmo evento (ex.: Veraneio leva a noiva e a Boca de Sapo fica exposta na festa).
-- Ano e lotação exata de cada carro: ainda não informados; diga que a equipe confirma na reserva.
+- Lotação exata de cada carro: ainda não informada; diga que a equipe confirma na reserva.
 
 PACOTES (valem para qualquer um dos carros ou os dois juntos; valores sob consulta)
 - Chegada da Noiva (até 2 h): busca da noiva em casa, hotel ou salão; trajeto até a cerimônia; tempo para fotos na chegada; laço na cor do casamento.

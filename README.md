@@ -23,7 +23,8 @@ worker/worker.js           servidor do chat (arquivo único para colar na Cloudf
 
 - [x] WhatsApp: (34) 99772-9702
 - [x] Fotos da Veraneio, da Boca de Sapo e dos dois juntos
-- [ ] Ano de cada carro e lotação da Veraneio
+- [x] Anos: Veraneio 1972, Boca de Sapo 1950
+- [ ] Lotação da Veraneio
 - [ ] Confirmar pacotes (duração, itens inclusos, preços ou "sob consulta")
 - [ ] Confirmar respostas das Dúvidas (motorista, decoração, cidades, sinal, chuva)
 - [x] Worker do chat publicado: https://aluganeio.jlrodrigues6900.workers.dev/
