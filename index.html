@@ -57,6 +57,7 @@
   </a>
   <nav class="nav" aria-label="Seções">
     <a href="#frota">Frota</a>
+    <a href="#galeria">Galeria</a>
     <a href="#pacotes">Pacotes</a>
     <a href="#como-funciona">Como funciona</a>
     <a href="#duvidas">Dúvidas</a>
@@ -156,6 +157,46 @@
           <a class="btn btn-block" href="#reserva" data-pick="Boca de Sapo">Reservar a Boca de Sapo</a>
         </div>
       </article>
+    </div>
+  </section>
+
+  <!-- GALERIA
+       Fotos de um casamento real com os dois carros. -->
+  <section class="section" id="galeria">
+    <div class="section-head">
+      <p class="eyebrow">Galeria</p>
+      <h2>Um casamento, dois clássicos.</h2>
+      <p class="section-lede">A Veraneio e a Boca de Sapo trabalhando juntas num casamento de verdade. Toque numa foto para ver em tela cheia.</p>
+    </div>
+    <div class="gallery">
+      <button class="g-item g-a4" type="button" data-full="assets/fotos/galeria/01-noivos-entre-os-dois-full.webp" data-index="0">
+        <img src="assets/fotos/galeria/01-noivos-entre-os-dois-g.webp" alt="Os noivos entre a Veraneio e a Boca de Sapo, com os faróis acesos" style="--pos: 50% 60%" loading="lazy" decoding="async">
+        <span class="g-cap">Os noivos entre a Veraneio e a Boca de Sapo, com os faróis acesos</span>
+      </button>
+      <button class="g-item g-a2" type="button" data-full="assets/fotos/galeria/02-noiva-embarcando-full.webp" data-index="1">
+        <img src="assets/fotos/galeria/02-noiva-embarcando-g.webp" alt="A noiva embarcando na Boca de Sapo" style="--pos: 40% 50%" loading="lazy" decoding="async">
+        <span class="g-cap">A noiva embarcando na Boca de Sapo</span>
+      </button>
+      <button class="g-item g-b2" type="button" data-full="assets/fotos/galeria/03-boca-chegando-full.webp" data-index="2">
+        <img src="assets/fotos/galeria/03-boca-chegando-g.webp" alt="A Boca de Sapo chegando, com a Veraneio logo atrás" style="--pos: 50% 70%" loading="lazy" decoding="async">
+        <span class="g-cap">A Boca de Sapo chegando, com a Veraneio logo atrás</span>
+      </button>
+      <button class="g-item g-b2" type="button" data-full="assets/fotos/galeria/04-boca-de-frente-full.webp" data-index="3">
+        <img src="assets/fotos/galeria/04-boca-de-frente-g.webp" alt="A grade cromada que deu o apelido de Boca de Sapo" style="--pos: 42% 55%" loading="lazy" decoding="async">
+        <span class="g-cap">A grade cromada que deu o apelido de Boca de Sapo</span>
+      </button>
+      <button class="g-item g-b2" type="button" data-full="assets/fotos/galeria/05-cortejo-na-estrada-full.webp" data-index="4">
+        <img src="assets/fotos/galeria/05-cortejo-na-estrada-g.webp" alt="O cortejo dos dois clássicos na estrada de terra" style="--pos: 50% 75%" loading="lazy" decoding="async">
+        <span class="g-cap">O cortejo dos dois clássicos na estrada de terra</span>
+      </button>
+      <button class="g-item g-c3" type="button" data-full="assets/fotos/galeria/06-veraneio-de-perfil-full.webp" data-index="5">
+        <img src="assets/fotos/galeria/06-veraneio-de-perfil-g.webp" alt="A Veraneio de perfil, com o para-lama da Boca de Sapo em primeiro plano" style="--pos: 50% 50%" loading="lazy" decoding="async">
+        <span class="g-cap">A Veraneio de perfil, com o para-lama da Boca de Sapo em primeiro plano</span>
+      </button>
+      <button class="g-item g-c3" type="button" data-full="assets/fotos/galeria/07-beijo-dos-noivos-full.webp" data-index="6">
+        <img src="assets/fotos/galeria/07-beijo-dos-noivos-g.webp" alt="O beijo dos noivos com os dois carros de cenário" style="--pos: 50% 55%" loading="lazy" decoding="async">
+        <span class="g-cap">O beijo dos noivos com os dois carros de cenário</span>
+      </button>
     </div>
   </section>
 
@@ -467,6 +508,15 @@
   </form>
   <a class="chat-wa" id="chatWa" href="https://wa.me/5534997729702" target="_blank" rel="noopener">Prefere falar com uma pessoa? Chame no WhatsApp</a>
 </section>
+
+<!-- Foto em tela cheia -->
+<dialog class="lightbox" id="lightbox" aria-label="Foto em tela cheia">
+  <img id="lbImg" src="" alt="">
+  <p class="lb-cap"><span id="lbCap"></span><span class="lb-count" id="lbCount"></span></p>
+  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Fechar foto">&times;</button>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Foto anterior">&#8249;</button>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Próxima foto">&#8250;</button>
+</dialog>
 
 <script src="assets/app.js"></script>
 <script src="assets/chat.js"></script>

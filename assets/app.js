@@ -129,3 +129,57 @@ $("#year").textContent = new Date().getFullYear();
   window.addEventListener("resize", update);
   update();
 })();
+
+// Galeria: foto em tela cheia com setas, teclado e arrastar no celular
+(() => {
+  const items = [...document.querySelectorAll(".g-item")];
+  const lb = $("#lightbox");
+  if (!items.length || !lb || typeof lb.showModal !== "function") return;
+  const img = $("#lbImg");
+  const cap = $("#lbCap");
+  const count = $("#lbCount");
+  let current = 0;
+
+  const show = (i) => {
+    current = (i + items.length) % items.length;
+    const item = items[current];
+    const alt = item.querySelector("img").alt;
+    img.classList.add("is-loading");
+    img.onload = () => img.classList.remove("is-loading");
+    img.src = item.dataset.full;
+    img.alt = alt;
+    cap.textContent = alt;
+    count.textContent = `${current + 1} / ${items.length}`;
+    // já baixa a próxima para a troca ser instantânea
+    new Image().src = items[(current + 1) % items.length].dataset.full;
+  };
+  const open = (i) => {
+    show(i);
+    lb.showModal();
+    document.documentElement.style.overflow = "hidden";
+  };
+  const close = () => lb.close();
+
+  items.forEach((item, i) => item.addEventListener("click", () => open(i)));
+  $("#lbPrev").addEventListener("click", () => show(current - 1));
+  $("#lbNext").addEventListener("click", () => show(current + 1));
+  $("#lbClose").addEventListener("click", close);
+  lb.addEventListener("close", () => {
+    document.documentElement.style.overflow = "";
+    items[current].focus();
+  });
+  // clique fora da foto fecha
+  lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+  lb.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") show(current - 1);
+    if (e.key === "ArrowRight") show(current + 1);
+  });
+  let startX = null;
+  lb.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+})();

@@ -11,7 +11,7 @@ index.html                 página única (hero, frota, ocasiões, pacotes, como
 assets/style.css           identidade visual
 assets/app.js              reserva via WhatsApp, botões flutuantes, efeito de desfoque (número do WhatsApp aqui)
 assets/chat.js             chat flutuante (URL do Worker aqui, em CHAT_ENDPOINT)
-assets/fotos/              fotos dos carros
+assets/fotos/              fotos dos carros (galeria/ = fotos do casamento)
 worker/worker.js           servidor do chat (arquivo único para colar na Cloudflare)
                            o bloco CONHECIMENTO é tudo o que o assistente sabe:
                            manter igual a Pacotes e Dúvidas do site
@@ -26,7 +26,7 @@ worker/worker.js           servidor do chat (arquivo único para colar na Cloudf
 - [ ] Confirmar respostas das Dúvidas (motorista, decoração, cidades, sinal, chuva)
 - [x] Worker do chat publicado: https://aluganeio.jlrodrigues6900.workers.dev/
 - [x] Chave do Gemini cadastrada no Worker (chat funcionando)
-- [ ] Álbuns de fotos para a galeria
+- [x] Galeria com 7 fotos de casamento (confirmar autorização dos noivos e crédito do fotógrafo)
 
 ## Chat com Gemini (tudo pelo navegador, sem instalar nada)
 
